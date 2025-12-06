@@ -13,9 +13,8 @@ fn main() {
         .collect();
 
     println!("stage 1 -> {}", stage1::solution(lines.clone()));
-    println!("stage 2 -> {}", stage1::solution(lines));
+    println!("stage 2 -> {}", stage2::solution(lines, 12));
 }
-
 
 #[cfg(test)]
 mod test {
@@ -44,6 +43,6 @@ mod test {
             "818181911112111".into(),
         ];
 
-        assert_eq!(solution(input), 3121910778619);
+        assert_eq!(solution(input, 12), 3121910778619);
     }
 }
