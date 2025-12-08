@@ -31,16 +31,16 @@ impl TileKind {
     }
 }
 
-pub fn get_grid<T>(lines: T) -> HashMap<(u8, u8), (Option<Tile>, u8)>
+pub fn get_grid<T>(lines: T) -> HashMap<(usize, usize), (Option<Tile>, u8)>
 where
     T: Iterator<Item = String>,
 {
-    let mut grid: HashMap<(u8, u8), (Option<Tile>, u8)> = HashMap::new();
+    let mut grid: HashMap<(usize, usize), (Option<Tile>, u8)> = HashMap::new();
 
     for (i, line) in lines.enumerate() {
         for (j, c) in line.chars().enumerate() {
             //lazily initialise if no other tile has already initialised the tile ij
-            grid.entry((i as u8, j as u8))
+            grid.entry((i, j))
                 .and_modify(|(tile, _)| {
                     tile.get_or_insert(Tile::new(TileKind::from(c)));
                 })
@@ -52,7 +52,7 @@ where
                     .iter()
                     .filter(|(h, k)| *h >= 0 && *k >= 0)
                 {
-                    grid.entry((*n as u8, *m as u8))
+                    grid.entry((*n as usize, *m as usize))
                         .and_modify(|(_, count)| {
                             *count += 1;
                         })
@@ -65,7 +65,7 @@ where
     grid
 }
 
-fn calculate_neighbours((x, y): (isize, isize)) -> [(isize, isize); 8] {
+pub fn calculate_neighbours((x, y): (isize, isize)) -> [(isize, isize); 8] {
     [
         (x - 1, y - 1),
         (x, y - 1),

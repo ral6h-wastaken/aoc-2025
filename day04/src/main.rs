@@ -12,7 +12,8 @@ fn main() {
         .lines()
         .map(|l| l.unwrap());
 
-    println!("stage1 -> {}", stage1::solution(lines));
+    //println!("stage1 -> {}", stage1::solution(lines));
+    println!("stage2 -> {}", stage2::solution(lines));
 }
 
 #[cfg(test)]
