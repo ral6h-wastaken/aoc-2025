@@ -1,5 +1,6 @@
-use std::str::FromStr;
+use std::{fmt::format, str::FromStr};
 
+#[derive(Eq, PartialEq, Copy, Clone, Debug)]
 pub enum Operator {
     PLUS,
     TIMES,
@@ -27,6 +28,15 @@ impl TryFrom<&str> for Operator {
     }
 }
 
+impl TryFrom<char> for Operator {
+    type Error = String;
+
+    fn try_from(value: char) -> Result<Self, Self::Error> {
+        Operator::from_str(format!("{}", value).as_str())
+    }
+}
+
+#[derive(Eq, PartialEq)]
 pub struct Operation {
     operands: Vec<u64>,
     operator: Operator,
