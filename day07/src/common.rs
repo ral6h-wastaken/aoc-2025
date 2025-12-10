@@ -55,8 +55,12 @@ impl RayState {
         }
     }
 
+    pub fn get_indices(&self) -> HashSet<usize> {
+        self.state.clone()
+    }
+
     /// returns the new state as well as the number of splits that occurred
-    pub fn advance(&self, manifold_row: Vec<ManifoldCell>) -> (u64, Self) {
+    pub fn advance(&self, manifold_row: Vec<ManifoldCell>) -> Self {
         let mut splits = 0_u64;
         let mut new_state = HashSet::<usize>::new();
 
@@ -66,7 +70,6 @@ impl RayState {
                     new_state.insert(i);
                 }
                 (true, ManifoldCell::SPLITTER) => {
-                    splits += 1;
                     if i > 0 {
                         new_state.insert(i - 1);
                     }
@@ -78,6 +81,6 @@ impl RayState {
             }
         }
 
-        (splits, RayState { state: new_state })
+        Self { state: new_state }
     }
 }

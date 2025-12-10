@@ -8,8 +8,13 @@ where
     let mut state = RayState::init(lines.next().expect("no first line found"));
 
     for line in lines.into_iter() {
-        let (new_splits, new_state) = state.advance(ManifoldCell::compute_cells(line));
-        total_splits += new_splits;
+        let new_state = state.advance(ManifoldCell::compute_cells(line));
+        total_splits += state
+            .get_indices()
+            .iter()
+            .filter(|elem| !new_state.get_indices().contains(elem))
+            .count() as u64;
+
         state = new_state;
     }
 
