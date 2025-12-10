@@ -1,4 +1,4 @@
-use crate::common::RayState;
+use crate::common::{ManifoldCell, RayState};
 
 pub fn solution<T>(mut lines: T) -> u64
 where
@@ -21,9 +21,14 @@ where
     // .^.^|^.^|.||.^.                               ar {4 8 10 11} spl { 1 3 5 7 13}
     // |.|.|.|.|.|||.|  0 2 4 6 8 10 11 12 14
 
-    let mut total_paths = 0_u64;
     let mut state = RayState::init(lines.next().expect("no first line found"));
 
+    for line in lines.into_iter() {
+        let new_state = state.advance(ManifoldCell::compute_cells(line));
+        println!("got state {:?}", new_state);
+        state = new_state;
+    }
 
-    todo!()
+    state.compute_possibile_paths()
+
 }
