@@ -8,7 +8,7 @@ fn main() {
         .lines()
         .map(|l| l.unwrap());
 
-    println!("stage1 -> {}", stage1::solution(lines));
+    println!("stage1 -> {}", stage1::solution(lines, 1000));
     // println!("stage2 -> {}", stage2::solution(lines));
 }
 
@@ -44,9 +44,9 @@ mod tests {
 984,92,344
 425,690,689
 ";
-        let ans = 40_u64;
+        let ans = 40;
 
-        assert_eq!(solution(input.lines().filter(|l| !l.trim().is_empty()).map(|l| l.into())), ans);
+        assert_eq!(solution(input.lines().filter(|l| !l.trim().is_empty()).map(|l| l.into()), 10), ans);
     }
 
     #[test]

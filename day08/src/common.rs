@@ -1,7 +1,7 @@
-use std::str::FromStr;
+use std::{cmp::{max, min}, str::FromStr};
 
 const COMMA: char = ',';
-#[derive(Debug)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct Point(u64, u64, u64);
 
 impl TryFrom<&str> for Point {
@@ -9,6 +9,15 @@ impl TryFrom<&str> for Point {
 
     fn try_from(value: &str) -> Result<Self, Self::Error> {
         Point::from_str(value)
+    }
+}
+
+impl Point {
+    pub fn distance_squared(&self, other: &Point) -> u64 {
+        let (x_1, y_1, z_1) = (self.0, self.1, self.2);
+        let (x_2, y_2, z_2) = (other.0, other.1, other.2);
+
+        return (max(x_1, x_2) - min(x_1, x_2)).pow(2) + (max(y_1, y_2) - min(y_1, y_2)).pow(2) + (max(z_1, z_2) - min(z_1, z_2)).pow(2)
     }
 }
 
