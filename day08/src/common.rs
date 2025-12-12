@@ -13,6 +13,10 @@ impl TryFrom<&str> for Point {
 }
 
 impl Point {
+    pub fn raw_coordinates(&self) -> (u64, u64, u64) {
+        (self.0, self.1, self.2)
+    }
+
     pub fn distance_squared(&self, other: &Point) -> u64 {
         let (x_1, y_1, z_1) = (self.0, self.1, self.2);
         let (x_2, y_2, z_2) = (other.0, other.1, other.2);
