@@ -14,6 +14,20 @@ pub struct Machine {
     joltage_req: Vec<usize>,
 }
 
+impl Machine {
+    pub fn target(&self) -> &LightDiagram {
+        &self.target
+    }
+
+    pub fn buttons(&self) -> &[Button] {
+        &self.buttons
+    }
+
+    pub fn joltage_req(&self) -> &[usize] {
+        &self.joltage_req
+    }
+}
+
 impl FromStr for Machine {
     type Err = String;
 
@@ -116,8 +130,8 @@ impl FromStr for Machine {
     }
 }
 
-#[derive(Copy, Clone, PartialEq, Eq, Debug)]
-enum LightState {
+#[derive(Copy, Clone, PartialEq, Eq, Debug, Hash)]
+pub enum LightState {
     ON,
     OFF,
 }
@@ -143,18 +157,26 @@ impl LightState {
     }
 }
 
-#[derive(PartialEq, Eq, Debug)]
-struct LightDiagram {
+#[derive(PartialEq, Eq, Debug, Hash)]
+pub struct LightDiagram {
     states: Vec<LightState>,
 }
 
 #[derive(Debug)]
-struct Button {
+pub struct Button {
     targets: Vec<usize>,
 }
 
 impl LightDiagram {
-    fn compute(&self, btn: &Button) -> Self {
+    pub fn size(&self) -> usize {
+        self.states.len()
+    }
+
+    pub fn new(states: Vec<LightState>) -> Self {
+        Self { states }
+    }
+
+    pub fn compute(&self, btn: &Button) -> Self {
         let mut new_states = Vec::<LightState>::new();
 
         for (i, light) in self.states.iter().enumerate() {
