@@ -162,9 +162,24 @@ pub struct LightDiagram {
     states: Vec<LightState>,
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Eq, Hash)]
 pub struct Button {
     targets: Vec<usize>,
+}
+
+impl Button {
+    pub fn add_joltage(&self, joltage_state: &Vec<usize>) -> Vec<usize> {
+        let mut new_voltages = Vec::<usize>::new();
+        for (i, current_jolt) in joltage_state.iter().enumerate() {
+            if self.targets.contains(&i) {
+                new_voltages.push(*current_jolt + 1);
+            } else {
+                new_voltages.push(*current_jolt);
+            }
+        }
+
+        new_voltages
+    }
 }
 
 impl LightDiagram {

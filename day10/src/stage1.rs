@@ -1,8 +1,8 @@
-use std::{collections::HashSet, fmt::format, str::FromStr};
+use std::{collections::HashSet, str::FromStr};
 
-use crate::common::{self, LightDiagram, LightState, Machine};
+use crate::common::{LightDiagram, LightState, Machine};
 
-pub fn solution<T>(mut lines: T) -> u64
+pub fn solution<T>(lines: T) -> u64
 where
     T: Iterator<Item = String>,
 {
